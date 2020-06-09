@@ -4,7 +4,7 @@
 - audio works for Chromium tabs
 
 ## using
-- peer to peer system, using [Peer.js](https://peerjs.com/) (WebRTC wrapper)
+- peer to peer architecture, using [Peer.js](https://peerjs.com/) (WebRTC wrapper)
 - front-end created with [IBM Carbon Design](https://www.carbondesignsystem.com/)
 - screen capturing by [Screen Capture API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API)
 
@@ -15,7 +15,7 @@
 
 
 ## takeaway
-   - Peer to peer applications <ins>don't need me to write or host a server</ins>
+   - Peer to peer applications => <ins>no need to write or host a server</ins>
    - WebRTC is extremely powerful for browser applications
    - Browsers have powerful API's ([Media Stream API](https://developer.mozilla.org/en-US/docs/Web/API/Media_Streams_API), [Screen Capture API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API), ...)
    - IBM Carbon Design looks good
