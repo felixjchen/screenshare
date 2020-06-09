@@ -43,6 +43,11 @@
   height: 100%;
   max-width: 100%;
   background: #f4f4f4;
+
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #control {
@@ -53,4 +58,20 @@
 
 body {
   height: 100vh;
+}
+
+@media only screen and (max-width: 1225px) {
+
+
+  #control {
+    width: 84%;
+  }
+}
+
+@media only screen and (max-width: 671px) {
+
+
+  #control {
+    width: 94%;
+  }
 }

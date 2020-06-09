@@ -69,8 +69,15 @@ function getScreenStream(peerID) {
     call.on('stream', function (stream) {
         console.log('Got stream ', stream)
         video.srcObject = stream
-        video.muted = false
-        video.controls = true
+        $('#loading').show();
+
+        video.onloadeddata = function () {
+            video.muted = false
+            video.controls = true
+            video.style.height = "auto";
+            $('#loading').hide();
+            video.play()
+        };
     });
 }
 
