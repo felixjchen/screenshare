@@ -19,3 +19,4 @@
    - WebRTC is extremely powerful for browser applications
    - Browsers have powerful API's ([Media Stream API](https://developer.mozilla.org/en-US/docs/Web/API/Media_Streams_API), [Screen Capture API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API), ...)
    - IBM Carbon Design looks good
+   - [Netlify](https://www.netlify.com/) is great
