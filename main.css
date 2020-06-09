@@ -79,5 +79,5 @@ body {
 #watermark {
   display: flex;
   justify-content: flex-end;
-  padding-right: 4px;
+  padding-right: 8px;
 }
