@@ -59,8 +59,8 @@ function getScreenStream(peerID) {
     if (emptyMediaStream == null) {
         emptyAudioTrack = createEmptyAudioTrack();
         emptyVideoTrack = createEmptyVideoTrack({
-            width: 1920,
-            height: 1080
+            width: 600,
+            height: 400
         });
         emptyMediaStream = new MediaStream([emptyAudioTrack, emptyVideoTrack])
     }
@@ -116,8 +116,6 @@ function setScreenStream() {
 
     let options = {
         video: {
-            width: 1920,
-            height: 1080,
             frameRate: 60
         },
         audio: {
