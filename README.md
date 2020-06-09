@@ -2,7 +2,6 @@
 - https://screen-share.netlify.app/
 - application for streaming desktop, browser window or browser tabs to other users
 - audio works for Chromium tabs
-- no need to install or run anything
 
 ## using
 - peer to peer system, using [Peer.js](https://peerjs.com/) (WebRTC wrapper)
