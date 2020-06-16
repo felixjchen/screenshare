@@ -3,15 +3,17 @@
 - application for streaming desktop, browser window or browser tabs to other users
 - audio works for Chromium tabs
 
+## motivation
+- watch videos together with friends 
+- show friends webpages
+- use peer to peer
+
+
 ## using
 - peer to peer architecture, using [Peer.js](https://peerjs.com/) (WebRTC wrapper)
 - front-end created with [IBM Carbon Design](https://www.carbondesignsystem.com/)
 - screen capturing by [Screen Capture API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API)
 
-## motivation
-- watch videos together with friends 
-- show friends webpages
-- use peer to peer
 
 
 ## takeaway
