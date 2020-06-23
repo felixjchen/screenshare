@@ -1,10 +1,3 @@
-// let peer = new Peer({
-//     "host": '127.0.0.1',
-//     "port": "80"
-// });
-
-// let config = ;
-
 let peer = new Peer({
   host: "peer-server.azurewebsites.net",
   port: 443,
