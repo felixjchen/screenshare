@@ -1,5 +1,5 @@
 # screen-share
-- https://screen-share.netlify.app/
+- https://screenshare.netlify.app/
 - application for streaming desktop, browser window or browser tabs to other users
 - audio works for Chromium tabs
 
