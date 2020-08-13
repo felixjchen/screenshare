@@ -77,8 +77,6 @@ let getStream = () => {
 };
 
 let setStream = async () => {
-  if (stream != null) stopStream();
-
   let options = {
     video: {
       width: { ideal: 1920 },
@@ -96,9 +94,11 @@ let setStream = async () => {
 };
 
 let stopStream = () => {
-  stream.getTracks().forEach((track) => {
-    track.stop();
-  });
+  if (stream) {
+    stream.getTracks().forEach((track) => {
+      track.stop();
+    });
+  }
 };
 
 /////////////////////////////////////////////
