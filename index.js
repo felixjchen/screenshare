@@ -91,7 +91,11 @@ let setStream = async () => {
     },
   };
 
-  stream = await navigator.mediaDevices.getDisplayMedia(options);
+  try {
+    stream = await navigator.mediaDevices.getDisplayMedia(options);
+  } catch (e) {
+    console.log("Error on setting stream: ", e);
+  }
 };
 
 let stopStream = () => {
