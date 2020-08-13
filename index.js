@@ -5,7 +5,9 @@ let peer = new Peer({
   secure: true,
 });
 
+// my screenshare stream
 let stream = null;
+// my video element
 let video = null;
 
 let emptyAudioTrack = null;
@@ -30,10 +32,6 @@ $(function () {
     document.execCommand("copy");
     document.body.removeChild(e);
   });
-
-  // $("#startWatching").click(() => {
-  //   getStream(streamerID);
-  // });
 });
 
 /////////////////////////////////////////////
@@ -52,21 +50,27 @@ peer.on("call", function (call) {
 // Actions
 /////////////////////////////////////////////
 let getStream = () => {
-  let streamerID = $("#streamerID").val();
   // Connect with empty media stream
   if (emptyMediaStream == null) setEmptyMediaStream();
 
-  call = peer.call(streamerID, emptyMediaStream);
-  call.on("stream", function (stream) {
+  // Get streamer ID from input field
+  let streamerID = $("#streamerID").val();
+  theirStream = peer.call(streamerID, emptyMediaStream);
+  theirStream.on("stream", function (stream) {
     console.log("Got stream ", stream);
     video.srcObject = stream;
 
-    video.onloadeddata = function () {
+    video.onloadeddata = () => {
       video.muted = false;
       // video.controls = true;
       video.style.height = "auto";
       video.play();
     };
+  });
+  theirStream.on("close", () => {
+    console.log("Stream closed");
+    video.style.height = "100%";
+    video.srcObject = null;
   });
 };
 
