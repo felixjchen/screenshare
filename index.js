@@ -55,8 +55,15 @@ let getStream = () => {
 
   // Get streamer ID from input field
   let streamerID = $("#streamerID").val();
-  theirStream = peer.call(streamerID, emptyMediaStream);
-  theirStream.on("stream", function (stream) {
+  mediaConnection = peer.call(streamerID, emptyMediaStream);
+
+  mediaConnection.on("close", () => {
+    console.log("Stream closed");
+    video.style.height = "100%";
+    video.srcObject = null;
+  });
+
+  mediaConnection.on("stream", function (stream) {
     console.log("Got stream ", stream);
     video.srcObject = stream;
 
@@ -66,11 +73,6 @@ let getStream = () => {
       video.style.height = "auto";
       video.play();
     };
-  });
-  theirStream.on("close", () => {
-    console.log("Stream closed");
-    video.style.height = "100%";
-    video.srcObject = null;
   });
 };
 
