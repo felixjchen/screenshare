@@ -43,6 +43,7 @@
   height: 100%;
   max-width: 100%;
   background: #f4f4f4;
+  border: #f4f4f4 3px solid;
 
   position: relative;
   top: 50%;

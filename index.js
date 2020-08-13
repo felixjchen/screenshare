@@ -6,12 +6,11 @@ let peer = new Peer({
 });
 
 let screenStream = null;
+let video = null;
 
 let emptyAudioTrack = null;
 let emptyVideoTrack = null;
 let emptyMediaStream = null;
-
-let video = null;
 
 /////////////////////////////////////////////
 // Frontend
@@ -53,16 +52,9 @@ peer.on("call", function (call) {
 /////////////////////////////////////////////
 // Actions
 /////////////////////////////////////////////
-function getScreenStream(peerID) {
+let getScreenStream = (peerID) => {
   // Connect with empty media stream
-  if (emptyMediaStream == null) {
-    emptyAudioTrack = createEmptyAudioTrack();
-    emptyVideoTrack = createEmptyVideoTrack({
-      width: 600,
-      height: 400,
-    });
-    emptyMediaStream = new MediaStream([emptyAudioTrack, emptyVideoTrack]);
-  }
+  if (emptyMediaStream == null) setEmptyMediaStream();
 
   call = peer.call(peerID, emptyMediaStream);
   call.on("stream", function (stream) {
@@ -78,43 +70,13 @@ function getScreenStream(peerID) {
       video.play();
     };
   });
-}
+};
 
 /////////////////////////////////////////////
 // Helpers
 /////////////////////////////////////////////
-function createEmptyAudioTrack() {
-  let ctx = new AudioContext();
-  let oscillator = ctx.createOscillator();
-  let dst = oscillator.connect(ctx.createMediaStreamDestination());
-  oscillator.start();
-  let track = dst.stream.getAudioTracks()[0];
-  return Object.assign(track, {
-    enabled: false,
-  });
-}
-
-function createEmptyVideoTrack({ width, height }) {
-  let canvas = Object.assign(document.createElement("canvas"), {
-    width,
-    height,
-  });
-  canvas.getContext("2d").fillRect(0, 0, width, height);
-
-  let stream = canvas.captureStream();
-  let track = stream.getVideoTracks()[0];
-
-  return Object.assign(track, {
-    enabled: false,
-  });
-}
-
-function setScreenStream() {
-  if (screenStream != null) {
-    screenStream.getTracks().forEach((mediaStreamTrack) => {
-      mediaStreamTrack.stop();
-    });
-  }
+let setScreenStream = () => {
+  if (screenStream != null) stopStream();
 
   let options = {
     video: {
@@ -138,4 +100,48 @@ function setScreenStream() {
     .catch(function (err) {
       console.log("Error when calling with screen media stream");
     });
-}
+};
+
+let stopStream = () => {
+  screenStream.getTracks().forEach((mediaStreamTrack) => {
+    mediaStreamTrack.stop();
+  });
+};
+
+/////////////////////////////////////////////
+// Empty Streams
+/////////////////////////////////////////////
+let createEmptyAudioTrack = () => {
+  let ctx = new AudioContext();
+  let oscillator = ctx.createOscillator();
+  let dst = oscillator.connect(ctx.createMediaStreamDestination());
+  oscillator.start();
+  let track = dst.stream.getAudioTracks()[0];
+  return Object.assign(track, {
+    enabled: false,
+  });
+};
+
+let createEmptyVideoTrack = ({ width, height }) => {
+  let canvas = Object.assign(document.createElement("canvas"), {
+    width,
+    height,
+  });
+  canvas.getContext("2d").fillRect(0, 0, width, height);
+
+  let stream = canvas.captureStream();
+  let track = stream.getVideoTracks()[0];
+
+  return Object.assign(track, {
+    enabled: false,
+  });
+};
+
+let setEmptyMediaStream = () => {
+  emptyAudioTrack = createEmptyAudioTrack();
+  emptyVideoTrack = createEmptyVideoTrack({
+    width: 600,
+    height: 400,
+  });
+  emptyMediaStream = new MediaStream([emptyAudioTrack, emptyVideoTrack]);
+};
