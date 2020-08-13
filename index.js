@@ -62,7 +62,7 @@ let getStream = () => {
 
     video.onloadeddata = () => {
       video.muted = false;
-      // video.controls = true;
+      video.controls = true;
       video.style.height = "auto";
       video.play();
     };
@@ -79,7 +79,9 @@ let setStream = async () => {
 
   let options = {
     video: {
-      frameRate: 60,
+      width: { ideal: 1920 },
+      height: { ideal: 1080 },
+      frameRate: 30,
     },
     audio: {
       autoGainControl: false,
@@ -98,8 +100,8 @@ let setStream = async () => {
 };
 
 let stopStream = () => {
-  stream.getTracks().forEach((mediaStreamTrack) => {
-    mediaStreamTrack.stop();
+  stream.getTracks().forEach((track) => {
+    track.stop();
   });
 };
 
