@@ -5,7 +5,7 @@ let peer = new Peer({
   secure: true,
 });
 
-let screenStream = null;
+let stream = null;
 let video = null;
 
 let emptyAudioTrack = null;
@@ -33,7 +33,7 @@ $(function () {
 
   $("#startWatching").click(() => {
     let streamerID = $("#streamerID").val();
-    getScreenStream(streamerID);
+    getStream(streamerID);
   });
 });
 
@@ -46,13 +46,13 @@ peer.on("open", function (id) {
 });
 
 peer.on("call", function (call) {
-  call.answer(screenStream);
+  call.answer(stream);
 });
 
 /////////////////////////////////////////////
 // Actions
 /////////////////////////////////////////////
-let getScreenStream = (peerID) => {
+let getStream = (peerID) => {
   // Connect with empty media stream
   if (emptyMediaStream == null) setEmptyMediaStream();
 
@@ -75,8 +75,8 @@ let getScreenStream = (peerID) => {
 /////////////////////////////////////////////
 // Helpers
 /////////////////////////////////////////////
-let setScreenStream = async () => {
-  if (screenStream != null) stopStream();
+let setStream = async () => {
+  if (stream != null) stopStream();
 
   let options = {
     video: {
@@ -91,11 +91,11 @@ let setScreenStream = async () => {
     },
   };
 
-  screenStream = await navigator.mediaDevices.getDisplayMedia(options);
+  stream = await navigator.mediaDevices.getDisplayMedia(options);
 };
 
 let stopStream = () => {
-  screenStream.getTracks().forEach((mediaStreamTrack) => {
+  stream.getTracks().forEach((mediaStreamTrack) => {
     mediaStreamTrack.stop();
   });
 };
