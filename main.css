@@ -30,6 +30,7 @@
 }
 
 #view {
+  max-height: calc(100% - 18px - 3.5rem - 252px);
   min-width: 100%;
   margin: 0;
   width: 0;
@@ -42,6 +43,7 @@
   margin: 0 auto;
   height: 100%;
   max-width: 100%;
+  max-height: 100%;
   background: #f4f4f4;
   border: #f4f4f4 3px solid;
 
