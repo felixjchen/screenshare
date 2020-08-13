@@ -31,14 +31,13 @@ $(function () {
     document.body.removeChild(e);
   });
 
-  $("#startWatching").click(() => {
-    let streamerID = $("#streamerID").val();
-    getStream(streamerID);
-  });
+  // $("#startWatching").click(() => {
+  //   getStream(streamerID);
+  // });
 });
 
 /////////////////////////////////////////////
-// Peers
+// Peer Listeners
 /////////////////////////////////////////////
 peer.on("open", function (id) {
   $("#peerID").text(id);
@@ -52,29 +51,25 @@ peer.on("call", function (call) {
 /////////////////////////////////////////////
 // Actions
 /////////////////////////////////////////////
-let getStream = (peerID) => {
+let getStream = () => {
+  let streamerID = $("#streamerID").val();
   // Connect with empty media stream
   if (emptyMediaStream == null) setEmptyMediaStream();
 
-  call = peer.call(peerID, emptyMediaStream);
+  call = peer.call(streamerID, emptyMediaStream);
   call.on("stream", function (stream) {
     console.log("Got stream ", stream);
     video.srcObject = stream;
-    $("#loading").show();
 
     video.onloadeddata = function () {
       video.muted = false;
       // video.controls = true;
       video.style.height = "auto";
-      $("#loading").hide();
       video.play();
     };
   });
 };
 
-/////////////////////////////////////////////
-// Helpers
-/////////////////////////////////////////////
 let setStream = async () => {
   if (stream != null) stopStream();
 
