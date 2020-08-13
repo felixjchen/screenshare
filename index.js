@@ -72,7 +72,7 @@ function getScreenStream(peerID) {
 
     video.onloadeddata = function () {
       video.muted = false;
-      video.controls = true;
+      // video.controls = true;
       video.style.height = "auto";
       $("#loading").hide();
       video.play();
