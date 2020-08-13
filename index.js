@@ -85,13 +85,7 @@ let setStream = async () => {
       height: { ideal: 1080 },
       frameRate: 30,
     },
-    audio: {
-      autoGainControl: false,
-      googAutoGainControl: false,
-      echoCancellation: false,
-      noiseSuppression: false,
-      sampleRate: 44100,
-    },
+    audio: true,
   };
 
   try {
