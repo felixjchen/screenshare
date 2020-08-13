@@ -75,7 +75,7 @@ let getScreenStream = (peerID) => {
 /////////////////////////////////////////////
 // Helpers
 /////////////////////////////////////////////
-let setScreenStream = () => {
+let setScreenStream = async () => {
   if (screenStream != null) stopStream();
 
   let options = {
@@ -91,15 +91,7 @@ let setScreenStream = () => {
     },
   };
 
-  navigator.mediaDevices
-    .getDisplayMedia(options)
-    .then(function (stream) {
-      console.log("Created display media", stream.get);
-      screenStream = stream;
-    })
-    .catch(function (err) {
-      console.log("Error when calling with screen media stream");
-    });
+  screenStream = await navigator.mediaDevices.getDisplayMedia(options);
 };
 
 let stopStream = () => {
