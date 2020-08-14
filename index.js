@@ -107,7 +107,7 @@ let stopStream = () => {
     });
     stream = null;
 
-    // Stop all connections watching this tream
+    // Stop all connections watching this stream
     for (let peerID in peer.connections) {
       conns = peer.connections[peerID];
       conns.forEach((i) => {
