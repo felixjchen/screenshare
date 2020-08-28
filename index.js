@@ -78,13 +78,22 @@ let getStream = () => {
 };
 
 let setStream = async () => {
+  // Audio suggestions: https://stackoverflow.com/questions/46063374/is-it-really-possible-for-webrtc-to-stream-high-quality-audio-without-noise
   let options = {
     video: {
       width: { ideal: 1920 },
       height: { ideal: 1080 },
       frameRate: 30,
     },
-    audio: true,
+    audio: {
+      autoGainControl: false,
+      channelCount: 2,
+      echoCancellation: false,
+      latency: 0,
+      noiseSuppression: false,
+      sampleRate: 48000,
+      sampleSize: 16,
+    },
   };
 
   try {
