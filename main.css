@@ -1,74 +1,73 @@
 .bx--snippet {
-  min-width: 0;
+    min-width: 0;
 }
 
 .peerIDField {
-  max-width: 360px;
+    max-width: 360px;
 }
 
 .peerIDField .bx--form-item {
-  float: left;
-  width: calc(100% - 40px);
+    float: left;
+    width: calc(100% - 40px);
 }
 
 .controlStep {
-  margin: 12px 0;
+    margin: 12px 0;
 }
 
 #control ol {
-  margin-left: 24px;
+    margin-left: 24px;
 }
 
 #control ol li {
-  margin-top: 8px;
+    margin-top: 8px;
 }
 
 #outer {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
 }
 
 #view {
-  max-height: calc(100% - 18px - 3.5rem - 252px);
-  min-width: 100%;
-  margin: 0;
-  width: 0;
-  flex: 1 1 auto;
-  padding-top: 1.2rem;
+    max-height: calc(100% - 18px - 3.5rem - 252px);
+    min-width: 100%;
+    margin: 0;
+    width: 0;
+    flex: 1 1 auto;
+    padding-top: 1.8rem;
 }
 
 #media {
-  display: block;
-  margin: 0 auto;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  background: #f4f4f4;
-
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    background: #f4f4f4;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #control {
-  flex: 0 0 auto;
-  padding-top: 1.5rem;
-  padding-bottom: 2rem;
+    flex: 0 0 auto;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
 }
 
 body {
-  height: 100vh;
+    height: 100vh;
 }
 
 @media only screen and (max-width: 671px) {
-  #control {
-    width: 94%;
-  }
+    #control {
+        width: 94%;
+    }
 }
 
 #watermark {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 8px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 8px;
 }
