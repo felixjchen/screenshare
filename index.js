@@ -65,18 +65,14 @@ let getStream = () => {
 
     // Get streamer ID from input field
     let streamerID = $("#streamerID").val();
-    mediaConnection = peer.call(streamerID, emptyMediaStream);
 
+    mediaConnection = peer.call(streamerID, emptyMediaStream);
     mediaConnection.on("close", () => {
-        // console.log("Stream closed");
-        video.style.height = "100%";
-        video.srcObject = null;
-        video.controls = false;
+        stopVideo();
     });
 
     mediaConnection.on("stream", function(stream) {
-        console.log("Got stream ", stream);
-        watch(stream);
+        startVideo(stream);
     });
 };
 
@@ -104,10 +100,11 @@ let setStream = async() => {
     } catch (e) {
         console.log("Error on setting stream: ", e);
     }
-    watch(stream);
+
+    startVideo(stream);
     $("#media").css("border", "2px solid #da1e28");
 
-    // I've stopped streaming, listener
+    // I've stopped streaming listener
     // https://stackoverflow.com/questions/25141080/how-to-listen-for-stop-sharing-click-in-chrome-desktopcapture-api
     stream.getVideoTracks()[0].onended = () => {
         stopStream();
@@ -123,9 +120,7 @@ let stopStream = () => {
         stream = null;
 
         // Stop showing my stream
-        video.srcObject = null;
-        video.controls = false;
-        video.style = null;
+        stopVideo();
 
         // Stop all connections watching this stream
         for (let peerID in peer.connections) {
@@ -140,7 +135,12 @@ let stopStream = () => {
 /////////////////////////////////////////////
 // Helpers
 /////////////////////////////////////////////
-let watch = (stream) => {
+let stopVideo = () => {
+    video.srcObject = null;
+    video.controls = false;
+    video.style = null;
+};
+let startVideo = (stream) => {
     video.srcObject = stream;
 
     video.onloadeddata = () => {
