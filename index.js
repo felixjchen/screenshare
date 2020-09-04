@@ -113,14 +113,14 @@ let setStream = async() => {
 
 let stopStream = () => {
     if (stream) {
+        // Stop showing my stream
+        stopVideo();
+
         // Stop stream, then dereference it
         stream.getTracks().forEach((track) => {
             track.stop();
         });
         stream = null;
-
-        // Stop showing my stream
-        stopVideo();
 
         // Stop all connections watching this stream
         for (let peerID in peer.connections) {
