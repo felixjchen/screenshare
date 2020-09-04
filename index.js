@@ -105,15 +105,12 @@ let setStream = async() => {
         console.log("Error on setting stream: ", e);
     }
     watch(stream);
-    $("#media").css("border", "2px solid red");
+    $("#media").css("border", "2px solid #da1e28");
 
     // I've stopped streaming, listener
     // https://stackoverflow.com/questions/25141080/how-to-listen-for-stop-sharing-click-in-chrome-desktopcapture-api
     stream.getVideoTracks()[0].onended = () => {
         stopStream();
-        video.srcObject = null;
-        video.controls = false;
-        video.style = null;
     };
 };
 
@@ -124,6 +121,11 @@ let stopStream = () => {
             track.stop();
         });
         stream = null;
+
+        // Stop showing my stream
+        video.srcObject = null;
+        video.controls = false;
+        video.style = null;
 
         // Stop all connections watching this stream
         for (let peerID in peer.connections) {
