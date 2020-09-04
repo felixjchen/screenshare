@@ -2,12 +2,13 @@ let peer = new Peer({
     host: "peer-server.azurewebsites.net",
     port: 443,
     path: "/myapp",
-    secure: true
+    secure: true,
 });
 
 // my screenshare stream
 let stream = null;
 // my video element
+let watchers = 0;
 let video = null;
 
 let emptyAudioTrack = null;
@@ -48,6 +49,12 @@ peer.on("open", function(id) {
 
 peer.on("call", function(mediaConnection) {
     mediaConnection.answer(stream);
+
+    watchers++;
+
+    mediaConnection.on("close", () => {
+        watchers--;
+    });
 });
 
 /////////////////////////////////////////////
@@ -70,14 +77,7 @@ let getStream = () => {
 
     mediaConnection.on("stream", function(stream) {
         console.log("Got stream ", stream);
-        video.srcObject = stream;
-
-        video.onloadeddata = () => {
-            video.muted = false;
-            video.controls = true;
-            video.style.height = "auto";
-            video.play();
-        };
+        watch(stream);
     });
 };
 
@@ -87,7 +87,7 @@ let setStream = async() => {
         video: {
             width: { ideal: 1920 },
             height: { ideal: 1080 },
-            frameRate: 60
+            frameRate: 60,
         },
         audio: {
             autoGainControl: false,
@@ -96,8 +96,8 @@ let setStream = async() => {
             latency: 0,
             noiseSuppression: false,
             sampleRate: 48000,
-            sampleSize: 16
-        }
+            sampleSize: 16,
+        },
     };
 
     try {
@@ -105,6 +105,8 @@ let setStream = async() => {
     } catch (e) {
         console.log("Error on setting stream: ", e);
     }
+    watch(stream);
+    $("#media").css("border", "2px solid red");
 
     // https://stackoverflow.com/questions/25141080/how-to-listen-for-stop-sharing-click-in-chrome-desktopcapture-api
     stream.getVideoTracks()[0].onended = () => {
@@ -115,7 +117,7 @@ let setStream = async() => {
 let stopStream = () => {
     if (stream) {
         // Stop stream, then dereference it
-        stream.getTracks().forEach(track => {
+        stream.getTracks().forEach((track) => {
             track.stop();
         });
         stream = null;
@@ -123,11 +125,25 @@ let stopStream = () => {
         // Stop all connections watching this stream
         for (let peerID in peer.connections) {
             conns = peer.connections[peerID];
-            conns.forEach(i => {
+            conns.forEach((i) => {
                 i.close();
             });
         }
     }
+};
+
+/////////////////////////////////////////////
+// Helpers
+/////////////////////////////////////////////
+let watch = (stream) => {
+    video.srcObject = stream;
+
+    video.onloadeddata = () => {
+        video.muted = false;
+        video.controls = true;
+        video.style.height = "auto";
+        video.play();
+    };
 };
 
 /////////////////////////////////////////////
@@ -140,14 +156,14 @@ let createEmptyAudioTrack = () => {
     oscillator.start();
     let track = dst.stream.getAudioTracks()[0];
     return Object.assign(track, {
-        enabled: false
+        enabled: false,
     });
 };
 
 let createEmptyVideoTrack = ({ width, height }) => {
     let canvas = Object.assign(document.createElement("canvas"), {
         width,
-        height
+        height,
     });
     canvas.getContext("2d").fillRect(0, 0, width, height);
 
@@ -155,7 +171,7 @@ let createEmptyVideoTrack = ({ width, height }) => {
     let track = stream.getVideoTracks()[0];
 
     return Object.assign(track, {
-        enabled: false
+        enabled: false,
     });
 };
 
@@ -163,7 +179,7 @@ let setEmptyMediaStream = () => {
     emptyAudioTrack = createEmptyAudioTrack();
     emptyVideoTrack = createEmptyVideoTrack({
         width: 600,
-        height: 400
+        height: 400,
     });
     emptyMediaStream = new MediaStream([emptyAudioTrack, emptyVideoTrack]);
 };
