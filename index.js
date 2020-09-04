@@ -108,9 +108,13 @@ let setStream = async() => {
     watch(stream);
     $("#media").css("border", "2px solid red");
 
+    // I've stopped streaming, listener
     // https://stackoverflow.com/questions/25141080/how-to-listen-for-stop-sharing-click-in-chrome-desktopcapture-api
     stream.getVideoTracks()[0].onended = () => {
         stopStream();
+        video.srcObject = null;
+        video.controls = false;
+        video.style = null;
     };
 };
 
