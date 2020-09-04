@@ -51,7 +51,6 @@ peer.on("call", function(mediaConnection) {
     mediaConnection.answer(stream);
 
     watchers++;
-
     mediaConnection.on("close", () => {
         watchers--;
     });
