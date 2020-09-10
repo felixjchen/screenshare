@@ -100,7 +100,7 @@ let startStreaming = async () => {
       stopStreaming();
     };
   } catch (e) {
-    console.log("Error on setting stream: ", e);
+    console.log("Error on starting stream: ", e);
   }
 };
 
