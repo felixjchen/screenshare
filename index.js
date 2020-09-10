@@ -47,7 +47,9 @@ peer.on("open", function (id) {
 });
 
 peer.on("call", function (mediaConnection) {
-  mediaConnection.answer(stream);
+  if (stream) {
+    mediaConnection.answer(stream);
+  }
 });
 
 /////////////////////////////////////////////
@@ -61,8 +63,7 @@ let watchStream = () => {
   let streamerID = $("#streamerID").val();
 
   mediaConnection = peer.call(streamerID, emptyMediaStream);
-
-  mediaConnection.on("stream", function (stream) {
+  mediaConnection.on("stream", (stream) => {
     startVideo(stream);
   });
   mediaConnection.on("close", () => {
