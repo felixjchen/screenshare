@@ -47,7 +47,6 @@ peer.on("open", (id) => {
 });
 
 peer.on("call", (mediaConnection) => {
-  console.log("got called");
   mediaConnection.answer(stream);
   setWatcherCounter();
 
@@ -98,6 +97,7 @@ let startStreaming = async () => {
     stream = await navigator.mediaDevices.getDisplayMedia(options);
 
     startStreamVideo(stream);
+    setWatcherCounter();
 
     // I've stopped streaming, attach listener to the stream
     // https://stackoverflow.com/questions/25141080/how-to-listen-for-stop-sharing-click-in-chrome-desktopcapture-api
