@@ -174,12 +174,8 @@ let countWatchers = () => {
 };
 let setWatcherCounter = () => {
   count = countWatchers();
-  if (count == 0) {
-    $(".watchers").css("display", "none");
-  } else {
-    $(".watchers").css("display", "block");
-    $("#watcherCounter").html(count);
-  }
+  $(".watchers").css("display", "block");
+  $("#watcherCounter").html(count);
 };
 
 /////////////////////////////////////////////
