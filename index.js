@@ -41,15 +41,19 @@ $(function () {
 /////////////////////////////////////////////
 // Peer Listeners
 /////////////////////////////////////////////
-peer.on("open", function (id) {
+peer.on("open", (id) => {
   $("#peerID").text(id);
   $("#loading").hide();
 });
 
-peer.on("call", function (mediaConnection) {
-  if (stream) {
-    mediaConnection.answer(stream);
-  }
+peer.on("call", (mediaConnection) => {
+  console.log("got called");
+  mediaConnection.answer(stream);
+  setWatcherCounter();
+
+  mediaConnection.on("close", () => {
+    setWatcherCounter();
+  });
 });
 
 /////////////////////////////////////////////
@@ -153,6 +157,29 @@ let stopVideo = () => {
   video.controls = false;
   video.style = null;
   video.muted = true;
+};
+let countWatchers = () => {
+  let r = 0;
+  for (var i in peer.connections) {
+    let connections = peer.connections[i];
+
+    for (let i = 0; i < connections.length; i++) {
+      if (connections[i].open) {
+        r++;
+        break;
+      }
+    }
+  }
+  return r;
+};
+let setWatcherCounter = () => {
+  count = countWatchers();
+  if (count == 0) {
+    $(".watchers").css("display", "none");
+  } else {
+    $(".watchers").css("display", "block");
+    $("#watcherCounter").html(count);
+  }
 };
 
 /////////////////////////////////////////////
