@@ -25,7 +25,7 @@
 
 ## next steps
 
+- new UI with React
+- URL parameters
 - Custom player controls
-- Better video sizing
-- Stability, sometimes need to press watch button multiple times
 - Testing
