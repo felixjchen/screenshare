@@ -11,13 +11,13 @@
 
 ## Implementation
 
-- peer to peer architecture, using [Peer.js](https://peerjs.com/) (WebRTC wrapper)
+- peer to peer using [Peer.js](https://peerjs.com/) (WebRTC wrapper)
 - front-end created with [IBM Carbon Design](https://www.carbondesignsystem.com/)
 - screen capturing by [Screen Capture API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API)
 
 ## Todo
 - new UI with React
-- URL parameters
+- Share links with URL parameters
 - Custom player controls
 - Testing
 
