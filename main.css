@@ -78,9 +78,3 @@ body {
     width: 94%;
   }
 }
-
-#watermark {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 8px;
-}
