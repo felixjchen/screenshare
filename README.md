@@ -5,7 +5,7 @@
 
 ## motivation
 
-- watch videos together with friends
+- watch movies and youtube together with friends
 - show friends webpages
 - use peer to peer
 
