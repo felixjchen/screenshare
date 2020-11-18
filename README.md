@@ -23,8 +23,7 @@
 
 ## Takeaway
 
-- Peer to peer applications => <ins>no need to write or host a server</ins>, WebRTC has potential
+- Peer to peer applications => <ins>no need to write or host a backend</ins>
 - Browsers have powerful API's ([Media Stream API](https://developer.mozilla.org/en-US/docs/Web/API/Media_Streams_API), [Screen Capture API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API), ...)
-- IBM Carbon Design looks good
 - [Netlify](https://www.netlify.com/) is great
 - React may have been better choice for frontend
