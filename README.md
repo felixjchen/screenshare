@@ -1,7 +1,7 @@
 # Screen Share
 
+- application for streaming desktop, browser window or browser tabs video and audtio to other users
 - https://screenshare.netlify.app/
-- application for streaming desktop, browser window or browser tabs video to other users
 
 ## Motivation
 
