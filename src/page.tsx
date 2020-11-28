@@ -34,16 +34,16 @@ const Page = () => (
 
     <Grid condensed>
       <Row>
-        <Column sm={{ span: 0 }} md={2} lg={2}>
+        <Column sm={{ span: 0 }} md={2} lg={3}>
           <Control></Control>
         </Column>
-        <Column sm={4} md={6} lg={10}>
+        <Column sm={4} md={6} lg={9}>
           <Stream></Stream>
         </Column>
       </Row>
       <Row>
         <Column sm={4} md={{ span: 0 }} lg={{ span: 0 }}>
-          <MobileControl></MobileControl>
+          <Control></Control>
         </Column>
       </Row>
     </Grid>
@@ -51,19 +51,15 @@ const Page = () => (
 );
 
 const Stream = () => {
-  return <> </>;
+  return (
+    <div id="stream">
+      <video muted></video>
+    </div>
+  );
 };
 
 const Control = () => {
-  return <div id="control"></div>;
-};
-
-const MobileControl = () => {
-  return (
-    <div id="mobile_control">
-      <Control></Control>
-    </div>
-  );
+  return <div id="control"> </div>;
 };
 
 export { Page };

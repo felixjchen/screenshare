@@ -1,8 +1,16 @@
+%content_height {
+  height: calc(100vh - 48px);
+  height: calc(var(--vh, 1vh) * 100 - 48px);
+}
+
 body {
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
 }
 
+.bx--header {
+  position: static;
+}
 .bx--grid {
   max-width: none;
   padding: 0;
@@ -14,8 +22,17 @@ body {
   padding: 0 !important;
 }
 
+#stream {
+  @extend %content_height;
+  position: relative;
+
+  video {
+    // background: url(cover.jpg) no-repeat;
+    object-fit: fill;
+  }
+}
+
 #control {
+  @extend %content_height;
   background-color: #262626;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
 }
