@@ -3,17 +3,17 @@ import { render } from "react-dom";
 import {
   Header,
   HeaderName,
-  HeaderNavigation,
-  HeaderMenu,
-  HeaderMenuItem,
-  HeaderMenuButton,
+  // HeaderNavigation,
+  // HeaderMenu,
+  // HeaderMenuItem,
+  // HeaderMenuButton,
   HeaderContainer,
-  HeaderGlobalBar,
-  SideNav,
-  SideNavMenuItem,
-  SideNavItems,
-  SideNavLink,
-  SideNavMenu,
+  // HeaderGlobalBar,
+  // SideNav,
+  // SideNavMenuItem,
+  // SideNavItems,
+  // SideNavLink,
+  // SideNavMenu,
 } from "carbon-components-react";
 import { Fade16 } from "@carbon/icons-react";
 import styles from "./page.scss";
