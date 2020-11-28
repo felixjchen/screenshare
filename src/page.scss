@@ -1,21 +1,21 @@
 body {
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 }
 
-/* Nav styles */
-#page .bx--side-nav__items {
+.bx--grid {
+  max-width: none;
   padding: 0;
 }
-#page .bx--side-nav--rail:not(.bx--side-nav--expanded) {
-  width: 0rem;
+.bx--row {
+  margin: 0 !important;
+}
+.bx--row > div {
+  padding: 0 !important;
 }
 
-#page .bx--header__menu-toggle {
-  display: none;
-}
-
-@media only screen and (max-width: 1056px) {
-  #page .bx--header__menu-toggle {
-    display: inline;
-  }
+#control {
+  background-color: #262626;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 }
