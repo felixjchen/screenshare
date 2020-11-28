@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 // import { Fade16 } from "@carbon/icons-react";
-import { Page } from "./page";
+import { Page } from "./components/page";
 import Peer from "peerjs";
 
 const setVh = () => {
@@ -16,7 +16,7 @@ const setVh = () => {
 
 setVh();
 
-let peer = new Peer({
+const peer = new Peer({
   host: "peer-server.azurewebsites.net",
   port: 443,
   path: "/myapp",
@@ -24,3 +24,10 @@ let peer = new Peer({
 });
 
 render(<Page />, document.getElementById("root"));
+
+// const player = videojs("stream", {
+//   controls: true,
+//   autoplay: false,
+//   preload: "auto",
+//   liveui: true,
+// });

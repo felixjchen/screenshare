@@ -16,9 +16,11 @@ import {
   // SideNavLink,
   // SideNavMenu,
 } from "carbon-components-react";
+import { FunctionComponent, useState, useEffect, useRef } from "react";
 import "./page.scss";
+import videojs from "video.js";
 
-const Page = () => (
+const Page: FunctionComponent = () => (
   <div id="page">
     <HeaderContainer
       render={() => (
@@ -37,7 +39,7 @@ const Page = () => (
         <Column sm={{ span: 0 }} md={2} lg={3}>
           <Control></Control>
         </Column>
-        <Column sm={4} md={6} lg={9}>
+        <Column id="stream_container" sm={4} md={6} lg={9}>
           <Stream></Stream>
         </Column>
       </Row>
@@ -50,10 +52,28 @@ const Page = () => (
   </div>
 );
 
-const Stream = () => {
+const videoSrc = "https://media.w3.org/2010/05/sintel/trailer_hd.mp4";
+const videoJSOptions = {
+  autoplay: "muted",
+  controls: true,
+  userActions: { hotkeys: true },
+  playbackRates: [0.5, 1, 1.5, 2],
+};
+const Stream: FunctionComponent = () => {
+  useEffect(() => {
+    const player = videojs("stream", videoJSOptions, () => {
+      player.src(videoSrc);
+      console.log("onPlayerReady");
+    });
+
+    return () => {
+      player.dispose();
+    };
+  });
+
   return (
-    <div id="stream">
-      <video muted></video>
+    <div data-vjs-player>
+      <video id="stream" className="video-js vjs-fill"></video>
     </div>
   );
 };

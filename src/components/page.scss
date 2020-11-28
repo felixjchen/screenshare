@@ -22,14 +22,9 @@ body {
   padding: 0 !important;
 }
 
-#stream {
+#stream_container {
   @extend %content_height;
   position: relative;
-
-  video {
-    // background: url(cover.jpg) no-repeat;
-    object-fit: fill;
-  }
 }
 
 #control {
