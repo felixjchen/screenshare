@@ -1,24 +1,40 @@
 import videojs from "video.js";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
 
-const videoSrc = "https://media.w3.org/2010/05/sintel/trailer_hd.mp4";
 const videoJSOptions = {
   autoplay: "muted",
   controls: true,
   userActions: { hotkeys: true },
   controlBar: {
-    // fullscreenToggle: false,
     progressControl: false,
     remainingTimeDisplay: false,
   },
 };
 
 const Stream = () => {
-  const videoPlayerRef = useRef(null); // Instead of ID
+  const videoPlayerRef = useRef(null);
   useEffect(() => {
     if (videoPlayerRef) {
       const player = videojs(videoPlayerRef.current, videoJSOptions, () => {
-        player.src(videoSrc);
+        const ButtonClass = videojs.getComponent("Button");
+        const RecordButtonClass = videojs.extend(ButtonClass, {
+          constructor: function () {
+            ButtonClass.call(this, player);
+          }, // notice the comma
+
+          handleClick: function () {
+            // Do your stuff
+            console.log(1);
+          },
+        });
+        const RecordButton = player.controlBar.addChild(
+          new RecordButtonClass()
+        );
+        RecordButton.addClass("vjs-record-button");
+
+        // Test video
+        player.src("https://media.w3.org/2010/05/sintel/trailer_hd.mp4");
+
         console.log(player);
       });
 
