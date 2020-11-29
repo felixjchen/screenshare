@@ -212,5 +212,5 @@ let setEmptyMediaStream = () => {
     width: 1,
     height: 1,
   });
-  emptyMediaStream = new MediaStream([emptyAudioTrack]);
+  emptyMediaStream = new MediaStream([emptyVideoTrack]);
 };
