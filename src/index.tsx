@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import Peer from "peerjs";
-import { setVh } from "./lib/helpers";
+import { setVh, getStreamerPeerID } from "./lib/helpers";
 import { Page } from "./components/page";
 
 setVh();
@@ -13,7 +13,10 @@ const peer = new Peer({
   secure: true,
 });
 
-render(<Page peer={peer} />, document.getElementById("root"));
+const streamerPeerID = getStreamerPeerID();
+console.log(streamerPeerID);
+
+render(<Page />, document.getElementById("root"));
 
 // const player = videojs("stream", {
 //   controls: true,

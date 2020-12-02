@@ -24,7 +24,7 @@ import { Stream } from "./stream";
 import { copyToClipboard } from "../lib/helpers";
 
 const Page: FunctionComponent = (props) => {
-  const { peer } = props;
+  // const { peer } = props;
   const [stream, setStream] = useState(undefined);
 
   const startStream = async () => {
