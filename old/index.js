@@ -66,8 +66,8 @@ $(function () {
   });
 
   setTimeout(function () {
-    watchStream("bed70f91-c352-4b5f-8c20-06f247ef2e14");
-  }, 3000);
+    watchStream("bcdf97dc-919b-4643-8261-e15dc8ddcea5");
+  }, 1000);
 });
 
 /////////////////////////////////////////////
@@ -178,7 +178,7 @@ let startVideo = (stream) => {
   video.srcObject = stream;
 
   video.onloadeddata = () => {
-    video.muted = false;
+    video.muted = true;
     video.controls = true;
     video.style.height = "auto";
     video.play();
