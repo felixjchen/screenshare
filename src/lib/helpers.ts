@@ -19,5 +19,22 @@ const copyToClipboard = (str: string) => {
   );
 };
 
+////// URL Create/Parse
 const isProduction = () => process.env.NODE_ENV === "production";
-export { setVh, copyToClipboard, isProduction };
+const production = isProduction();
+const getStreamerURL = (peerID: string): string => {
+  let url = "http://localhost:3000/";
+
+  if (production) {
+    url = "https://screensharedev.netlify.app/";
+  }
+
+  return `${url}?watch=${peerID}`;
+};
+const getStreamerPeerID = (): string | null => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  return urlParams.get("watch");
+};
+export { setVh, copyToClipboard, getStreamerPeerID, getStreamerURL };
