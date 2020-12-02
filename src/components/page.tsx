@@ -21,10 +21,10 @@ import "./page.scss";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
 import { Recording20 } from "@carbon/icons-react";
 import { Stream } from "./stream";
-import { copyToClipboard } from "../lib/helpers";
+import { copyToClipboard, getStreamerURL } from "../lib/helpers";
 
-const Page: FunctionComponent = (props) => {
-  // const { peer } = props;
+const Page: FunctionComponent = (props: any) => {
+  const { id } = props;
   const [stream, setStream] = useState(undefined);
 
   const startStream = async () => {
@@ -50,7 +50,9 @@ const Page: FunctionComponent = (props) => {
       const mediaDevices = navigator.mediaDevices as any;
       const stream = await mediaDevices.getDisplayMedia(options);
       setStream(stream);
-      copyToClipboard("");
+      const streamerURL = getStreamerURL(id);
+      console.log(streamerURL);
+      copyToClipboard(streamerURL);
     } catch (e) {
       console.log("Error on starting stream: ", e);
     }

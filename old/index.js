@@ -65,9 +65,9 @@ $(function () {
     watchStream();
   });
 
-  setTimeout(function () {
-    watchStream("bcdf97dc-919b-4643-8261-e15dc8ddcea5");
-  }, 1000);
+  // setTimeout(function () {
+  //   watchStream("bcdf97dc-919b-4643-8261-e15dc8ddcea5");
+  // }, 1000);
 });
 
 /////////////////////////////////////////////

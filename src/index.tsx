@@ -1,10 +1,12 @@
 import React from "react";
 import { render } from "react-dom";
 import Peer from "peerjs";
-import { setVh, getStreamerPeerID } from "./lib/helpers";
+import { setVh, getStreamerID } from "./lib/helpers";
 import { Page } from "./components/page";
 
 setVh();
+const streamerPeerID = getStreamerID();
+console.log(streamerPeerID);
 
 const peer = new Peer({
   host: "peer-server.azurewebsites.net",
@@ -12,11 +14,10 @@ const peer = new Peer({
   path: "/myapp",
   secure: true,
 });
-
-const streamerPeerID = getStreamerPeerID();
-console.log(streamerPeerID);
-
-render(<Page />, document.getElementById("root"));
+peer.on("open", (id) => {
+  const pageParams = { id } as any;
+  render(<Page {...pageParams} />, document.getElementById("root"));
+});
 
 // const player = videojs("stream", {
 //   controls: true,
