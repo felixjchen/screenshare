@@ -13,7 +13,7 @@ const peer = new Peer({
   secure: true,
 });
 
-render(<Page />, document.getElementById("root"));
+render(<Page peer={peer} />, document.getElementById("root"));
 
 // const player = videojs("stream", {
 //   controls: true,

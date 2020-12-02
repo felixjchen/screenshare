@@ -8,4 +8,16 @@ const setVh = () => {
   });
 };
 
-export { setVh };
+const copyToClipboard = (str: string) => {
+  navigator.clipboard.writeText(str).then(
+    function () {
+      console.log("Async: Copying to clipboard was successful!");
+    },
+    function (err) {
+      console.error("Async: Could not copy text: ", err);
+    }
+  );
+};
+
+const isProduction = () => process.env.NODE_ENV === "production";
+export { setVh, copyToClipboard, isProduction };
