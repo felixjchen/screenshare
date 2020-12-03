@@ -1,6 +1,7 @@
 body {
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 
 .bx--header {
@@ -17,7 +18,5 @@ body {
 }
 
 #record_icon {
-  svg {
-    fill: red !important;
-  }
+  fill: red !important;
 }

@@ -8,6 +8,7 @@ import {
   HeaderContainer,
   HeaderGlobalBar,
   HeaderGlobalAction,
+  TooltipIcon,
 } from "carbon-components-react";
 import "./page.scss";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
@@ -61,13 +62,18 @@ const Page: FunctionComponent = (props: any) => {
               </HeaderName>
               <HeaderNavigation aria-label="Stream"></HeaderNavigation>
               <HeaderGlobalBar>
-                <HeaderGlobalAction
-                  id="record_icon"
+                {/* <HeaderGlobalAction
+                  
                   aria-label="Logout"
+                ></HeaderGlobalAction> */}
+                <TooltipIcon
+                  tooltipText="Record and copy sharing link"
+                  direction="bottom"
+                  align="end"
                   onClick={startStream}
                 >
-                  <Recording20 />
-                </HeaderGlobalAction>
+                  <Recording20 id="record_icon" />
+                </TooltipIcon>
               </HeaderGlobalBar>
             </Header>
           </>
