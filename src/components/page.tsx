@@ -16,8 +16,11 @@ import { Recording20 } from "@carbon/icons-react";
 import { Stream } from "./stream";
 import { copyToClipboard, getStreamerURL } from "../lib/helpers";
 
-const Page: FunctionComponent = (props: any) => {
-  const { id } = props;
+type PageProps = {
+  id: string;
+};
+
+const Page: FunctionComponent<PageProps> = ({ id }) => {
   const [stream, setStream] = useState(undefined);
 
   const startStream = async () => {
@@ -62,10 +65,6 @@ const Page: FunctionComponent = (props: any) => {
               </HeaderName>
               <HeaderNavigation aria-label="Stream"></HeaderNavigation>
               <HeaderGlobalBar>
-                {/* <HeaderGlobalAction
-                  
-                  aria-label="Logout"
-                ></HeaderGlobalAction> */}
                 <TooltipIcon
                   tooltipText="Record and copy sharing link"
                   direction="bottom"
