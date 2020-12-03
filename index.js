@@ -208,9 +208,10 @@ let createEmptyVideoTrack = ({ width, height }) => {
 };
 
 let setEmptyMediaStream = () => {
+  emptyAudioTrack = createEmptyAudioTrack();
   emptyVideoTrack = createEmptyVideoTrack({
     width: 1,
     height: 1,
   });
-  emptyMediaStream = new MediaStream([emptyVideoTrack]);
+  emptyMediaStream = new MediaStream([emptyVideoTrack, emptyAudioTrack]);
 };
