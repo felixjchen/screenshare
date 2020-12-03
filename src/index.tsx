@@ -15,7 +15,7 @@ const peer = new Peer({
   secure: true,
 });
 peer.on("open", (id) => {
-  const pageParams = { id } as any;
+  const pageParams = { id };
   render(<Page {...pageParams} />, document.getElementById("root"));
 });
 
