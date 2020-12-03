@@ -2,7 +2,7 @@ import videojs from "video.js";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
 
 const videoJSOptions = {
-  autoplay: "muted",
+  autoplay: true,
   controls: true,
   inactivityTimeout: 0,
   userActions: { hotkeys: true },
@@ -10,12 +10,15 @@ const videoJSOptions = {
     progressControl: false,
     remainingTimeDisplay: false,
   },
+  bigPlayButton: false,
 } as any;
 
-type StreamProps = {};
+type StreamProps = {
+  stream: MediaStream | undefined;
+};
 
-const Stream: FunctionComponent<StreamProps> = () => {
-  const videoPlayerRef = useRef(null);
+const Stream: FunctionComponent<StreamProps> = ({ stream }) => {
+  const videoPlayerRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     if (videoPlayerRef) {
       const player = videojs(videoPlayerRef.current, videoJSOptions, () => {
@@ -40,14 +43,15 @@ const Stream: FunctionComponent<StreamProps> = () => {
         // );
 
         // Test video
-        // player.src("https://media.w3.org/2010/05/sintel/trailer_hd.mp4");
-
+        // console.log(stream);
+        console.log();
+        if (stream !== undefined) {
+          const videoElement: any = player.tech().el();
+          videoElement.srcObject = stream;
+          console.log(player.tech());
+        }
         console.log(player);
       });
-
-      return () => {
-        player.dispose();
-      };
     }
 
     return () => {};

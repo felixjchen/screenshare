@@ -47,12 +47,13 @@ const Page: FunctionComponent<PageProps> = ({ id }) => {
       const stream = await mediaDevices.getDisplayMedia(options);
       setStream(stream);
       const streamerURL = getStreamerURL(id);
-      console.log(streamerURL);
       copyToClipboard(streamerURL);
     } catch (e) {
       console.log("Error on starting stream: ", e);
     }
   };
+
+  const streamProps = { stream };
 
   return (
     <div id="page">
@@ -80,7 +81,7 @@ const Page: FunctionComponent<PageProps> = ({ id }) => {
       />
 
       <div id="stream_container">
-        <Stream></Stream>
+        <Stream {...streamProps}></Stream>
       </div>
     </div>
   );
