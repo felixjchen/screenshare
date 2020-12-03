@@ -10,9 +10,11 @@ const videoJSOptions = {
     progressControl: false,
     remainingTimeDisplay: false,
   },
-};
+} as any;
 
-const Stream = () => {
+type StreamProps = {};
+
+const Stream: FunctionComponent<StreamProps> = () => {
   const videoPlayerRef = useRef(null);
   useEffect(() => {
     if (videoPlayerRef) {
