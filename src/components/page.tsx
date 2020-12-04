@@ -22,7 +22,7 @@ type PageProps = {
 };
 
 const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
-  const [stream, setStream] = useState(undefined);
+  const [stream, setStream] = useState<MediaStream | undefined>(undefined);
 
   const startStream = async () => {
     // Audio suggestions: https://stackoverflow.com/questions/46063374/is-it-really-possible-for-webrtc-to-stream-high-quality-audio-without-noise
@@ -44,14 +44,30 @@ const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
     };
 
     try {
-      const mediaDevices = navigator.mediaDevices as any;
-      const stream = await mediaDevices.getDisplayMedia(options);
+      const mediaDevices: any = navigator.mediaDevices;
+      const stream: MediaStream = await mediaDevices.getDisplayMedia(options);
       setStream(stream);
+
+      // On stream finish listener
+      stream.getVideoTracks()[0].onended = () => {
+        stopStream();
+      };
+
+      // Copy sharing link
       const streamerURL = getStreamerURL(id);
       copyToClipboard(streamerURL);
     } catch (e) {
       console.log("Error on starting stream: ", e);
     }
+  };
+
+  const stopStream = () => {
+    if (stream) {
+      stream.getTracks().forEach((track: any) => {
+        track.stop();
+      });
+    }
+    setStream(undefined);
   };
 
   const streamProps = { stream };

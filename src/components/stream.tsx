@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect, useRef } from "react";
+import { FunctionComponent } from "react";
 import ReactPlayer from "react-player";
 
 type StreamProps = {
@@ -6,7 +6,6 @@ type StreamProps = {
 };
 
 const Stream: FunctionComponent<StreamProps> = ({ stream }) => {
-  // const videoPlayerRef = useRef<HTMLVideoElement>(null);
   const reactPlayerProps = {
     url: stream,
     controls: true,
