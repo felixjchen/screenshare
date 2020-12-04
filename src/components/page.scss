@@ -15,6 +15,15 @@ body {
   video {
     background-color: red !important;
   }
+
+  video:focus {
+    outline: none;
+  }
+
+  audio::-webkit-media-controls-timeline,
+  video::-webkit-media-controls-timeline {
+    display: none;
+  }
 }
 
 #record_icon {
