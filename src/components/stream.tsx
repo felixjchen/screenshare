@@ -1,4 +1,3 @@
-// import videojs from "video.js";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 

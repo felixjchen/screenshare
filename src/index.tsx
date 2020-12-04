@@ -5,8 +5,7 @@ import { setVh, getStreamerID } from "./lib/helpers";
 import { Page } from "./components/page";
 
 setVh();
-const streamerPeerID = getStreamerID();
-console.log(streamerPeerID);
+const streamerID = getStreamerID();
 
 const peer = new Peer({
   host: "peer-server.azurewebsites.net",
@@ -15,13 +14,6 @@ const peer = new Peer({
   secure: true,
 });
 peer.on("open", (id) => {
-  const pageParams = { id };
-  render(<Page {...pageParams} />, document.getElementById("root"));
+  const pageProps = { id, streamerID };
+  render(<Page {...pageProps} />, document.getElementById("root"));
 });
-
-// const player = videojs("stream", {
-//   controls: true,
-//   autoplay: false,
-//   preload: "auto",
-//   liveui: true,
-// });

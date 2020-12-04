@@ -11,9 +11,10 @@ body {
 #stream_container {
   height: calc(100vh - 48px);
   height: calc(var(--vh, 1vh) * 100 - 48px);
+  background-color: #262626;
 
   video {
-    background-color: red !important;
+    background-color: #262626;
   }
 
   video:focus {

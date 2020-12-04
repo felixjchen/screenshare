@@ -18,9 +18,10 @@ import { copyToClipboard, getStreamerURL } from "../lib/helpers";
 
 type PageProps = {
   id: string;
+  streamerID: string | null;
 };
 
-const Page: FunctionComponent<PageProps> = ({ id }) => {
+const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
   const [stream, setStream] = useState(undefined);
 
   const startStream = async () => {
