@@ -78,10 +78,10 @@ const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
         render={() => (
           <>
             <Header aria-label="IBM Platform Name">
-              <HeaderName href="#" prefix="Stream">
-                Share
+              <HeaderName href="#" prefix="Ice">
+                Cream
               </HeaderName>
-              <HeaderNavigation aria-label="Stream"></HeaderNavigation>
+              <HeaderNavigation aria-label="Ice"></HeaderNavigation>
               <HeaderGlobalBar>
                 <StreamButton {...streamButtonProps}></StreamButton>
               </HeaderGlobalBar>
