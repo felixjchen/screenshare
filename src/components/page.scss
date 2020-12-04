@@ -11,10 +11,10 @@ body {
 #stream_container {
   height: calc(100vh - 48px);
   height: calc(var(--vh, 1vh) * 100 - 48px);
-}
 
-#stream_container:focus {
-  outline: none !important;
+  video {
+    background-color: red !important;
+  }
 }
 
 #record_icon {
