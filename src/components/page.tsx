@@ -12,8 +12,8 @@ import {
 } from "carbon-components-react";
 import "./page.scss";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
-import { Recording20 } from "@carbon/icons-react";
 import { Stream } from "./stream";
+import { StreamButton } from "./stream_button";
 import { copyToClipboard, getStreamerURL } from "../lib/helpers";
 
 type PageProps = {
@@ -71,7 +71,7 @@ const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
   };
 
   const streamProps = { stream };
-
+  const streamButtonProps = { stream, startStream, stopStream };
   return (
     <div id="page">
       <HeaderContainer
@@ -83,14 +83,7 @@ const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
               </HeaderName>
               <HeaderNavigation aria-label="Stream"></HeaderNavigation>
               <HeaderGlobalBar>
-                <TooltipIcon
-                  tooltipText="Record and copy sharing link"
-                  direction="bottom"
-                  align="end"
-                  onClick={startStream}
-                >
-                  <Recording20 id="record_icon" />
-                </TooltipIcon>
+                <StreamButton {...streamButtonProps}></StreamButton>
               </HeaderGlobalBar>
             </Header>
           </>

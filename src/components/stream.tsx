@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import ReactPlayer from "react-player";
 
 type StreamProps = {
-  stream: MediaStream | undefined;
+  stream?: MediaStream;
 };
 
 const Stream: FunctionComponent<StreamProps> = ({ stream }) => {
