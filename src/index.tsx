@@ -13,7 +13,8 @@ const peer = new Peer({
   path: "/myapp",
   secure: true,
 });
+
 peer.on("open", (id) => {
-  const pageProps = { id, streamerID };
+  const pageProps = { peer, streamerID };
   render(<Page {...pageProps} />, document.getElementById("root"));
 });

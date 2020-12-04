@@ -10,37 +10,9 @@ let stream = null;
 // my video element
 let video = null;
 
+let emptyAudioTrack = null;
 let emptyVideoTrack = null;
 let emptyMediaStream = null;
-
-/////////////////////////////////////////////
-// Empty Streams
-/////////////////////////////////////////////
-
-let createEmptyVideoTrack = ({ width, height }) => {
-  let canvas = Object.assign(document.createElement("canvas"), {
-    width,
-    height,
-  });
-  canvas.getContext("2d").fillRect(0, 0, width, height);
-
-  let stream = canvas.captureStream();
-  let track = stream.getVideoTracks()[0];
-
-  return Object.assign(track, {
-    enabled: false,
-  });
-};
-
-let setEmptyMediaStream = () => {
-  emptyVideoTrack = createEmptyVideoTrack({
-    width: 1,
-    height: 1,
-  });
-  emptyMediaStream = new MediaStream([emptyVideoTrack]);
-};
-
-setEmptyMediaStream();
 
 /////////////////////////////////////////////
 // Frontend
@@ -64,10 +36,6 @@ $(function () {
   $("#streamerID").keyup(function () {
     watchStream();
   });
-
-  // setTimeout(function () {
-  //   watchStream("bcdf97dc-919b-4643-8261-e15dc8ddcea5");
-  // }, 1000);
 });
 
 /////////////////////////////////////////////
@@ -90,14 +58,14 @@ peer.on("call", (mediaConnection) => {
 /////////////////////////////////////////////
 // Actions
 /////////////////////////////////////////////
-let watchStream = (streamerID) => {
+let watchStream = () => {
+  // If not empty media stream
+  if (emptyMediaStream == null) setEmptyMediaStream();
+
   // Get streamer ID from input field
-  // let streamerID = $("#streamerID").val();
+  let streamerID = $("#streamerID").val();
 
   mediaConnection = peer.call(streamerID, emptyMediaStream);
-  console.log(streamerID);
-  // console.log(mediaConnection);
-  // mediaConnection.open();
   mediaConnection.on("stream", (stream) => {
     startVideo(stream);
   });
@@ -178,7 +146,7 @@ let startVideo = (stream) => {
   video.srcObject = stream;
 
   video.onloadeddata = () => {
-    video.muted = true;
+    video.muted = false;
     video.controls = true;
     video.style.height = "auto";
     video.play();
@@ -208,4 +176,42 @@ let setWatcherCounter = () => {
   count = countWatchers();
   $(".watchers").css("display", "block");
   $("#watcherCounter").html(count);
+};
+
+/////////////////////////////////////////////
+// Empty Streams
+/////////////////////////////////////////////
+let createEmptyAudioTrack = () => {
+  let ctx = new AudioContext();
+  let oscillator = ctx.createOscillator();
+  let dst = oscillator.connect(ctx.createMediaStreamDestination());
+  oscillator.start();
+  let track = dst.stream.getAudioTracks()[0];
+  return Object.assign(track, {
+    enabled: false,
+  });
+};
+
+let createEmptyVideoTrack = ({ width, height }) => {
+  let canvas = Object.assign(document.createElement("canvas"), {
+    width,
+    height,
+  });
+  canvas.getContext("2d").fillRect(0, 0, width, height);
+
+  let stream = canvas.captureStream();
+  let track = stream.getVideoTracks()[0];
+
+  return Object.assign(track, {
+    enabled: false,
+  });
+};
+
+let setEmptyMediaStream = () => {
+  emptyAudioTrack = createEmptyAudioTrack();
+  emptyVideoTrack = createEmptyVideoTrack({
+    width: 1,
+    height: 1,
+  });
+  emptyMediaStream = new MediaStream([emptyVideoTrack, emptyAudioTrack]);
 };

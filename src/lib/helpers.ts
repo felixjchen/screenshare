@@ -32,7 +32,7 @@ const copyToClipboard = (str: string) => {
   document.body.removeChild(textArea);
 };
 
-////// URL Create/Parse
+// URL Create/Parse
 const isProduction = () => process.env.NODE_ENV === "production";
 const production = isProduction();
 const getStreamerURL = (id: string): string => {
@@ -50,4 +50,45 @@ const getStreamerID = (): string | null => {
 
   return urlParams.get("watch");
 };
-export { setVh, copyToClipboard, getStreamerID, getStreamerURL };
+
+// Empty track
+const getEmptyAudioTrack = () => {
+  let ctx = new AudioContext();
+  let oscillator = ctx.createOscillator();
+  let dst: any = oscillator.connect(ctx.createMediaStreamDestination());
+  oscillator.start();
+  let track = dst.stream.getAudioTracks()[0];
+  return Object.assign(track, {
+    enabled: false,
+  });
+};
+
+const getEmptyVideoTrack = (width: number, height: number) => {
+  let canvas: any = Object.assign(document.createElement("canvas"), {
+    width,
+    height,
+  });
+
+  canvas.getContext("2d").fillRect(0, 0, width, height);
+
+  let stream = canvas.captureStream();
+  let track = stream.getVideoTracks()[0];
+
+  return Object.assign(track, {
+    enabled: false,
+  });
+};
+
+const getEmptyMediaStream = () => {
+  const emptyAudioTrack = getEmptyAudioTrack();
+  const emptyVideoTrack = getEmptyVideoTrack(1, 1);
+  return new MediaStream([emptyVideoTrack, emptyAudioTrack]);
+};
+
+export {
+  setVh,
+  copyToClipboard,
+  getStreamerID,
+  getStreamerURL,
+  getEmptyMediaStream,
+};

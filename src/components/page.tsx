@@ -14,15 +14,39 @@ import "./page.scss";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
 import { Stream } from "./stream";
 import { StreamButton } from "./stream_button";
-import { copyToClipboard, getStreamerURL } from "../lib/helpers";
+import {
+  copyToClipboard,
+  getStreamerURL,
+  getEmptyMediaStream,
+} from "../lib/helpers";
+import Peer from "peerjs";
 
 type PageProps = {
-  id: string;
+  peer: Peer;
   streamerID: string | null;
 };
 
-const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
+const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
+  const { id } = peer;
   const [stream, setStream] = useState<MediaStream | undefined>(undefined);
+  console.log(id, streamerID);
+
+  peer.on("call", (mediaConnection) => {
+    mediaConnection.answer(stream);
+    mediaConnection.on("close", () => {});
+  });
+
+  useEffect(() => {
+    if (streamerID) {
+      const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
+      mediaConnection.on("stream", (stream) => {
+        setStream(stream);
+      });
+      mediaConnection.on("close", () => {
+        stopStream();
+      });
+    }
+  }, [peer, streamerID]);
 
   const startStream = async () => {
     // Audio suggestions: https://stackoverflow.com/questions/46063374/is-it-really-possible-for-webrtc-to-stream-high-quality-audio-without-noise
