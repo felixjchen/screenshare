@@ -14,24 +14,18 @@ const StreamButton: FunctionComponent<StreamButtonProps> = ({
   startStream,
   stopStream,
 }) => {
-  return stream ? (
-    <TooltipIcon
-      tooltipText="Stop streaming"
-      direction="bottom"
-      align="end"
-      onClick={stopStream}
-    >
-      <Stop20 id="record_icon" />
-    </TooltipIcon>
-  ) : (
-    <TooltipIcon
-      tooltipText="Stream and copy sharing link"
-      direction="bottom"
-      align="end"
-      onClick={startStream}
-    >
-      <Recording20 id="record_icon" />
-    </TooltipIcon>
+  const handler = stream ? stopStream : startStream;
+  const icon = stream ? <Stop20 /> : <Recording20 />;
+  const tooltipIconProps = {
+    tooltipText: "Stop streaming",
+    direction: "bottom",
+    onClick: handler,
+    align: "end",
+  };
+  return (
+    <div id="stream_button">
+      <TooltipIcon {...tooltipIconProps}>{icon}</TooltipIcon>
+    </div>
   );
 };
 
