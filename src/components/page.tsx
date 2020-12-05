@@ -13,40 +13,38 @@ import {
 import "./page.scss";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
 import { Stream } from "./stream";
-import { StreamButton } from "./stream_button";
+import { Control } from "./control";
 import {
   copyToClipboard,
   getStreamerURL,
   getEmptyMediaStream,
 } from "../lib/helpers";
 import Peer from "peerjs";
+import { watch } from "fs";
 
 type PageProps = {
   peer: Peer;
-  streamerID: string | null;
+  watchStream?: MediaStream;
 };
 
-const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
-  const { id } = peer;
+const Page: FunctionComponent<PageProps> = ({ peer, watchStream }) => {
   const [stream, setStream] = useState<MediaStream | undefined>(undefined);
-  console.log(id, streamerID);
+  const [id, setID] = useState<string>("");
 
+  peer.on("open", (id) => {
+    setID(id);
+  });
   peer.on("call", (mediaConnection) => {
     mediaConnection.answer(stream);
     mediaConnection.on("close", () => {});
   });
 
   useEffect(() => {
-    if (streamerID) {
-      const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
-      mediaConnection.on("stream", (stream) => {
-        setStream(stream);
-      });
-      mediaConnection.on("close", () => {
-        stopStream();
-      });
+    if (watchStream) {
+      console.log(watchStream);
+      setStream(watchStream);
     }
-  }, [peer, streamerID]);
+  }, []);
 
   const startStream = async () => {
     // Audio suggestions: https://stackoverflow.com/questions/46063374/is-it-really-possible-for-webrtc-to-stream-high-quality-audio-without-noise
@@ -95,7 +93,7 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
   };
 
   const streamProps = { stream };
-  const streamButtonProps = { stream, startStream, stopStream };
+  const controlProps = { stream, startStream, stopStream };
   return (
     <div id="page">
       <HeaderContainer
@@ -107,7 +105,7 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
               </HeaderName>
               <HeaderNavigation aria-label="Ice"></HeaderNavigation>
               <HeaderGlobalBar>
-                <StreamButton {...streamButtonProps}></StreamButton>
+                <Control {...controlProps}></Control>
               </HeaderGlobalBar>
             </Header>
           </>
