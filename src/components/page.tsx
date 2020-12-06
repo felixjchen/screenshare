@@ -20,7 +20,6 @@ import {
   getEmptyMediaStream,
 } from "../lib/helpers";
 import Peer from "peerjs";
-import { watch } from "fs";
 
 type PageProps = {
   peer: Peer;
@@ -35,7 +34,6 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
     setID(id);
     if (streamerID) {
       const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
-      console.log(1);
       mediaConnection.on("stream", (stream) => {
         setStream(stream)
       });
@@ -47,20 +45,13 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
     mediaConnection.on("close", () => {});
   });
 
-  // useEffect(() => {
-  //   if (watchStream) {
-  //     console.log(watchStream);
-  //     setStream(watchStream);
-  //   }
-  // }, []);
-
   const startStream = async () => {
     // Audio suggestions: https://stackoverflow.com/questions/46063374/is-it-really-possible-for-webrtc-to-stream-high-quality-audio-without-noise
     const options = {
       video: {
         width: { ideal: 1920 },
         height: { ideal: 1080 },
-        frameRate: 60,
+        frameRate: 30,
       },
       audio: {
         autoGainControl: false,

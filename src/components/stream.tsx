@@ -11,7 +11,9 @@ const Stream: FunctionComponent<StreamProps> = ({ stream }) => {
     controls: true,
     width: "100%",
     height: "100%",
-    playing: stream !== undefined,
+    playing: true,
+    // muted:true
+    volume: 0
   };
   return <ReactPlayer {...reactPlayerProps} />;
 };
