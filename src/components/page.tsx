@@ -24,27 +24,35 @@ import { watch } from "fs";
 
 type PageProps = {
   peer: Peer;
-  watchStream?: MediaStream;
+  streamerID: string | null;
 };
 
-const Page: FunctionComponent<PageProps> = ({ peer, watchStream }) => {
+const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
   const [stream, setStream] = useState<MediaStream | undefined>(undefined);
   const [id, setID] = useState<string>("");
 
   peer.on("open", (id) => {
     setID(id);
+    if (streamerID) {
+      const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
+      console.log(1);
+      mediaConnection.on("stream", (stream) => {
+        setStream(stream)
+      });
+      mediaConnection.on("close", () => {});
+    }
   });
   peer.on("call", (mediaConnection) => {
     mediaConnection.answer(stream);
     mediaConnection.on("close", () => {});
   });
 
-  useEffect(() => {
-    if (watchStream) {
-      console.log(watchStream);
-      setStream(watchStream);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (watchStream) {
+  //     console.log(watchStream);
+  //     setStream(watchStream);
+  //   }
+  // }, []);
 
   const startStream = async () => {
     // Audio suggestions: https://stackoverflow.com/questions/46063374/is-it-really-possible-for-webrtc-to-stream-high-quality-audio-without-noise

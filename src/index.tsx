@@ -14,15 +14,8 @@ const peer = new Peer({
   secure: true,
 });
 
-const pageProps = { peer, watchStream: undefined } as any;
+const pageProps = { peer, streamerID };
 
-if (streamerID) {
-  const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
-  mediaConnection.on("stream", (stream) => {
-    console.log(1);
-    pageProps["watchStream"] = stream;
-  });
-  mediaConnection.on("close", () => {});
-}
+console.log(pageProps)
 
 render(<Page {...pageProps} />, document.getElementById("root"));
