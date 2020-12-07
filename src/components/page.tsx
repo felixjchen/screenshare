@@ -36,11 +36,13 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
       const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
       mediaConnection.on("stream", (stream) => {
         setStream(stream)
+        console.log(stream)
       });
       mediaConnection.on("close", () => {});
     }
   });
   peer.on("call", (mediaConnection) => {
+    console.log(stream)
     mediaConnection.answer(stream);
     mediaConnection.on("close", () => {});
   });
@@ -92,7 +94,7 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
   };
 
   const streamProps = { stream };
-  const controlProps = { stream, startStream, stopStream };
+  const controlProps = { id, stream, startStream, stopStream };
   return (
     <div id="page">
       <HeaderContainer
@@ -104,7 +106,7 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
               </HeaderName>
               <HeaderNavigation aria-label="Ice"></HeaderNavigation>
               <HeaderGlobalBar>
-                <Control {...controlProps}></Control>
+                {streamerID ? <> </> : <Control {...controlProps}></Control>}
               </HeaderGlobalBar>
             </Header>
           </>
