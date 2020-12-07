@@ -1,6 +1,10 @@
 import { FunctionComponent } from "react";
 import { TooltipIcon } from "carbon-components-react";
-import { Recording20, Stop20, Copy20 } from "@carbon/icons-react";
+import {
+  RecordingFilledAlt20,
+  StopFilledAlt20,
+  Copy20,
+} from "@carbon/icons-react";
 import { copyToClipboard, getStreamerURL } from "../lib/helpers";
 
 type ControlProps = {
@@ -17,7 +21,11 @@ const Control: FunctionComponent<ControlProps> = ({
   stopStream,
 }) => {
   const toggleStreamHandler = stream ? stopStream : startStream;
-  const toggleStreamIcon = stream ? <Stop20 /> : <Recording20 />;
+  const toggleStreamIcon = stream ? (
+    <StopFilledAlt20 />
+  ) : (
+    <RecordingFilledAlt20 />
+  );
   const toggleStreamProps = {
     tooltipText: stream
       ? "Stop streaming"
@@ -36,7 +44,6 @@ const Control: FunctionComponent<ControlProps> = ({
     },
   };
 
-  console.log(copyStreamerURLProps);
   return (
     <>
       {stream ? (

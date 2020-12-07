@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import Peer from "peerjs";
-import { setVh, getStreamerID, getEmptyMediaStream } from "./lib/helpers";
+import { setVh, getStreamerID } from "./lib/helpers";
 import { Page } from "./components/page";
 
 setVh();
@@ -16,6 +16,6 @@ const peer = new Peer({
 
 const pageProps = { peer, streamerID };
 
-console.log(pageProps)
+console.log(pageProps);
 
 render(<Page {...pageProps} />, document.getElementById("root"));

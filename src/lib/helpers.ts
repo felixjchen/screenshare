@@ -23,10 +23,10 @@ const copyToClipboard = (str: string) => {
 
   try {
     const successful = document.execCommand("copy");
-    const msg = successful ? "successful" : "unsuccessful";
-    console.log("Copying text command was " + msg);
+    // const msg = successful ? "successful" : "unsuccessful";
+    // console.log("Copying text command was " + msg);
   } catch (err) {
-    console.error("Oops, unable to copy", err);
+    // console.error("Oops, unable to copy", err);
   }
 
   document.body.removeChild(textArea);
