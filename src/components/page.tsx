@@ -35,14 +35,14 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
     if (streamerID) {
       const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
       mediaConnection.on("stream", (stream) => {
-        setStream(stream)
-        console.log(stream)
+        setStream(stream);
+        console.log(stream);
       });
       mediaConnection.on("close", () => {});
     }
   });
   peer.on("call", (mediaConnection) => {
-    console.log(stream)
+    console.log(stream);
     mediaConnection.answer(stream);
     mediaConnection.on("close", () => {});
   });
@@ -101,7 +101,10 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
         render={() => (
           <>
             <Header aria-label="IBM Platform Name">
-              <HeaderName href="#" prefix="Ice">
+              <HeaderName
+                href="https://github.com/felixjchen/screen-share"
+                prefix="Ice"
+              >
                 Cream
               </HeaderName>
               <HeaderNavigation aria-label="Ice"></HeaderNavigation>
