@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { TooltipIcon, HeaderGlobalAction } from "carbon-components-react";
+import { TooltipIcon } from "carbon-components-react";
 import {
   RecordingFilledAlt20,
   StopFilledAlt20,
@@ -26,45 +26,28 @@ const Control: FunctionComponent<ControlProps> = ({
   ) : (
     <RecordingFilledAlt20 />
   );
-  // const toggleStreamProps = {
-  //   tooltipText: stream
-  //     ? "Stop streaming"
-  //     : "Start streaming and copy share link",
-  //   onClick: toggleStreamHandler,
-  //   direction: "bottom",
-  //   align: "end",
-  // };
+  const toggleStreamProps = {
+    className: "bx--header__action",
+    tooltipText: stream ? "Stop streaming" : "Start streaming",
+    onClick: toggleStreamHandler,
+    direction: "bottom",
+    align: "end",
+  };
 
-  // const copyStreamerURLProps = {
-  //   tooltipText: "Copy streamer URL",
-  //   direction: "bottom",
-  //   align: "end",
-  //   onClick: () => {
-  //     copyToClipboard(getStreamerURL(id));
-  //   },
-  // };
+  const copyStreamerURLProps = {
+    className: "bx--header__action",
+    tooltipText: "Copy streamer URL",
+    direction: "bottom",
+    align: "end",
+    onClick: () => {
+      copyToClipboard(getStreamerURL(id));
+    },
+  };
 
   return (
     <>
       {stream ? (
-        <HeaderGlobalAction
-          aria-label="Copy"
-          onClick={() => {
-            copyToClipboard(getStreamerURL(id));
-          }}
-        >
-          <Copy20 />
-        </HeaderGlobalAction>
-      ) : (
-        <> </>
-      )}
-
-      <HeaderGlobalAction aria-label="Stream" onClick={toggleStreamHandler}>
-        {toggleStreamIcon}
-      </HeaderGlobalAction>
-
-      {/* {stream ? (
-        <div className="stream_button">
+        <div>
           <TooltipIcon {...copyStreamerURLProps}>
             <Copy20></Copy20>
           </TooltipIcon>
@@ -72,9 +55,9 @@ const Control: FunctionComponent<ControlProps> = ({
       ) : (
         <> </>
       )}
-      <div className="stream_button">
+      <div className="data-tooltip-primary-focus">
         <TooltipIcon {...toggleStreamProps}>{toggleStreamIcon}</TooltipIcon>
-      </div> */}
+      </div>
     </>
   );
 };
