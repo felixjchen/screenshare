@@ -18,6 +18,7 @@ import {
   copyToClipboard,
   getStreamerURL,
   getEmptyMediaStream,
+  removeAllListeners,
 } from "../lib/helpers";
 import Peer from "peerjs";
 
@@ -30,7 +31,8 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
   const [stream, setStream] = useState<MediaStream | undefined>(undefined);
   const [id, setID] = useState<string>("");
 
-  peer.on("open", (id) => {
+  removeAllListeners(peer);
+  peer.on("open", (id: string) => {
     setID(id);
     if (streamerID) {
       const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
@@ -46,6 +48,8 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
     mediaConnection.answer(stream);
     mediaConnection.on("close", () => {});
   });
+
+  console.log(peer);
 
   const startStream = async () => {
     // Audio suggestions: https://stackoverflow.com/questions/46063374/is-it-really-possible-for-webrtc-to-stream-high-quality-audio-without-noise

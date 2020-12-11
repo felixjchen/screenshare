@@ -51,6 +51,10 @@ const getStreamerID = (): string | null => {
   return urlParams.get("watch");
 };
 
+const removeAllListeners = (e: any) => {
+  e.removeAllListeners();
+};
+
 // Empty track
 const getEmptyAudioTrack = () => {
   let ctx = new AudioContext();
@@ -91,4 +95,5 @@ export {
   getStreamerID,
   getStreamerURL,
   getEmptyMediaStream,
+  removeAllListeners,
 };
