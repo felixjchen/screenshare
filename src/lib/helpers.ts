@@ -51,6 +51,7 @@ const getStreamerID = (): string | null => {
   return urlParams.get("watch");
 };
 
+// peer is EventEmitter https://github.com/peers/peerjs/issues/331
 const removeAllListeners = (e: any) => {
   e.removeAllListeners();
 };
