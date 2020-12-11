@@ -31,24 +31,28 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
   const [stream, setStream] = useState<MediaStream | undefined>(undefined);
   const [id, setID] = useState<string>("");
 
-  removeAllListeners(peer);
-  peer.on("open", (id: string) => {
-    setID(id);
-    if (streamerID) {
-      const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
-      mediaConnection.on("stream", (stream) => {
-        setStream(stream);
-        console.log(stream);
-      });
+  useEffect(() => {
+    peer.on("open", (id: string) => {
+      setID(id);
+      if (streamerID) {
+        const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
+        mediaConnection.on("stream", (stream) => {
+          setStream(stream);
+          console.log(stream);
+        });
+        mediaConnection.on("close", () => {});
+      }
+    });
+    peer.on("call", (mediaConnection) => {
+      console.log(stream);
+      mediaConnection.answer(stream);
       mediaConnection.on("close", () => {});
-    }
-  });
-  peer.on("call", (mediaConnection) => {
-    console.log(stream);
-    mediaConnection.answer(stream);
-    mediaConnection.on("close", () => {});
-  });
+    });
 
+    return function cleanup() {
+      removeAllListeners(peer);
+    };
+  });
   console.log(peer);
 
   const startStream = async () => {
