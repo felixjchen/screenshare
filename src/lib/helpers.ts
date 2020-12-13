@@ -1,3 +1,5 @@
+import Peer from "peerjs";
+
 const setVh = () => {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -51,9 +53,25 @@ const getStreamerID = (): string | null => {
   return urlParams.get("watch");
 };
 
+// Peer helpers
 // peer is EventEmitter https://github.com/peers/peerjs/issues/331
-const removeAllListeners = (e: any) => {
-  e.removeAllListeners();
+const removeAllListeners = (peer: any) => {
+  peer.removeAllListeners();
+};
+
+const getWatchers = (peer: Peer) => {
+  let r = 0;
+  for (let i in peer.connections) {
+    let connections = peer.connections[i];
+
+    for (let i = 0; i < connections.length; i++) {
+      if (connections[i].open) {
+        r++;
+        break;
+      }
+    }
+  }
+  return r;
 };
 
 // Empty track
@@ -94,6 +112,7 @@ export {
   setVh,
   copyToClipboard,
   getStreamerID,
+  getWatchers,
   getStreamerURL,
   getEmptyMediaStream,
   removeAllListeners,

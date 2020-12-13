@@ -6,6 +6,20 @@ body {
   overflow: hidden;
 }
 
+.bx--header__nav {
+  display: block !important;
+
+  svg {
+    margin: 14px 0;
+    fill: #da1e28 !important;
+  }
+
+  div {
+    color: #da1e28 !important;
+    margin: 16px 5px;
+  }
+}
+
 .bx--header {
   position: static;
 }

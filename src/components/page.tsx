@@ -19,7 +19,9 @@ import {
   getStreamerURL,
   getEmptyMediaStream,
   removeAllListeners,
+  getWatchers,
 } from "../lib/helpers";
+import { ViewFilled20 } from "@carbon/icons-react";
 import Peer from "peerjs";
 
 type PageProps = {
@@ -30,33 +32,43 @@ type PageProps = {
 const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
   const [stream, setStream] = useState<MediaStream | undefined>(undefined);
   const [id, setID] = useState<string>("");
+  const [watchers, setWatchers] = useState<number>(0);
 
   useEffect(() => {
     peer.on("open", (id: string) => {
       setID(id);
-      if (streamerID) {
-        const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
-        mediaConnection.on("stream", (stream) => {
-          setStream(stream);
-          console.log(stream);
-        });
-        mediaConnection.on("close", () => {});
-      }
     });
     peer.on("call", (mediaConnection) => {
-      console.log(stream);
       mediaConnection.answer(stream);
-      mediaConnection.on("close", () => {});
+      setWatchers(getWatchers(peer));
+
+      mediaConnection.on("close", () => {
+        console.log(1);
+        setWatchers(getWatchers(peer));
+      });
     });
 
     return function cleanup() {
       removeAllListeners(peer);
     };
-  });
-  console.log(peer);
+  }, [peer, stream]);
+
+  useEffect(() => {
+    if (streamerID) {
+      peer.on("open", () => {
+        const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
+        mediaConnection.on("stream", (stream) => {
+          setStream(stream);
+        });
+        mediaConnection.on("close", () => {
+          console.log(2);
+          setStream(undefined);
+        });
+      });
+    }
+  }, [peer, streamerID]);
 
   const startStream = async () => {
-    // Audio suggestions: https://stackoverflow.com/questions/46063374/is-it-really-possible-for-webrtc-to-stream-high-quality-audio-without-noise
     const options = {
       video: {
         width: { ideal: 1920 },
@@ -85,8 +97,7 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
       };
 
       // Copy sharing link
-      const streamerURL = getStreamerURL(id);
-      copyToClipboard(streamerURL);
+      copyToClipboard(getStreamerURL(id));
     } catch (e) {
       console.log("Error on starting stream: ", e);
     }
@@ -103,6 +114,7 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
 
   const streamProps = { stream };
   const controlProps = { id, stream, startStream, stopStream };
+
   return (
     <div id="page">
       <HeaderContainer
@@ -115,9 +127,22 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
               >
                 Cream
               </HeaderName>
-              <HeaderNavigation aria-label="Ice"></HeaderNavigation>
+              <HeaderNavigation aria-label="">
+                {streamerID === null && stream !== undefined ? (
+                  <>
+                    <ViewFilled20 />
+                    <div>{watchers}</div>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </HeaderNavigation>
               <HeaderGlobalBar>
-                {streamerID ? <> </> : <Control {...controlProps}></Control>}
+                {streamerID === null ? (
+                  <Control {...controlProps}></Control>
+                ) : (
+                  <> </>
+                )}
               </HeaderGlobalBar>
             </Header>
           </>

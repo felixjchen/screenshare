@@ -47,17 +47,17 @@ const Control: FunctionComponent<ControlProps> = ({
   return (
     <>
       {stream ? (
-        <div>
+        <>
           <TooltipIcon {...copyStreamerURLProps}>
             <Copy20></Copy20>
           </TooltipIcon>
-        </div>
+        </>
       ) : (
         <> </>
       )}
-      <div className="data-tooltip-primary-focus">
+      <>
         <TooltipIcon {...toggleStreamProps}>{toggleStreamIcon}</TooltipIcon>
-      </div>
+      </>
     </>
   );
 };
