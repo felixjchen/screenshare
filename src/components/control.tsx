@@ -28,7 +28,7 @@ const Control: FunctionComponent<ControlProps> = ({
   );
   const toggleStreamProps = {
     className: "bx--header__action",
-    tooltipText: stream ? "Stop streaming" : "Start streaming",
+    tooltipText: stream ? "Stop stream" : "Start stream",
     onClick: toggleStreamHandler,
     direction: "bottom",
     align: "end",
@@ -36,7 +36,7 @@ const Control: FunctionComponent<ControlProps> = ({
 
   const copyStreamerURLProps = {
     className: "bx--header__action",
-    tooltipText: "Copy streamer URL",
+    tooltipText: "Copy stream URL",
     direction: "bottom",
     align: "end",
     onClick: () => {
