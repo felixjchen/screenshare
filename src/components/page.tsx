@@ -25,47 +25,63 @@ import { ViewFilled20 } from "@carbon/icons-react";
 import Peer from "peerjs";
 
 type PageProps = {
-  peer: Peer;
+  id: string;
   streamerID: string | null;
 };
 
-const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
+const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
+  const [peer, setPeer] = useState<Peer | undefined>(undefined);
   const [stream, setStream] = useState<MediaStream | undefined>(undefined);
-  const [id, setID] = useState<string>("");
   const [watchers, setWatchers] = useState<number>(0);
 
   useEffect(() => {
-    peer.on("open", (id: string) => {
-      setID(id);
+    const peer = new Peer(id, {
+      host: "peer-server.azurewebsites.net",
+      port: 443,
+      path: "/myapp",
+      secure: true,
     });
+    setPeer(peer);
+  }, [id]);
+
+  useEffect(() => {
+    if (!peer) return;
+
     peer.on("call", (mediaConnection) => {
       mediaConnection.answer(stream);
       setWatchers(getWatchers(peer));
 
       mediaConnection.on("close", () => {
-        console.log(1);
         setWatchers(getWatchers(peer));
       });
+      mediaConnection.on("error", () => {
+        setWatchers(getWatchers(peer));
+      });
+
+      console.log(peer);
     });
 
-    return function cleanup() {
+    return () => {
       removeAllListeners(peer);
     };
   }, [peer, stream]);
 
   useEffect(() => {
-    if (streamerID) {
-      peer.on("open", () => {
-        const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
-        mediaConnection.on("stream", (stream) => {
-          setStream(stream);
-        });
-        mediaConnection.on("close", () => {
-          console.log(2);
-          setStream(undefined);
-        });
+    if (!peer || !streamerID) return;
+
+    peer.on("open", () => {
+      const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
+      console.log(mediaConnection);
+      mediaConnection.on("stream", (stream) => {
+        console.log(3);
+        setStream(stream);
       });
-    }
+      mediaConnection.on("close", () => {
+        setStream(undefined);
+      });
+    });
+
+    console.log(peer);
   }, [peer, streamerID]);
 
   const startStream = async () => {
@@ -108,8 +124,8 @@ const Page: FunctionComponent<PageProps> = ({ peer, streamerID }) => {
       stream.getTracks().forEach((track: any) => {
         track.stop();
       });
+      setStream(undefined);
     }
-    setStream(undefined);
   };
 
   const streamProps = { stream };
