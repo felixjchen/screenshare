@@ -2,26 +2,20 @@ import {
   Header,
   HeaderName,
   HeaderNavigation,
-  HeaderMenu,
-  HeaderMenuItem,
-  HeaderMenuButton,
   HeaderContainer,
   HeaderGlobalBar,
-  HeaderGlobalAction,
-  TooltipIcon,
 } from "carbon-components-react";
 import "./page.scss";
-import { FunctionComponent, useState, useEffect, useRef } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import { Stream } from "./stream";
 import { Control } from "./control";
+import { Watchers } from "./watchers";
 import {
   copyToClipboard,
   getStreamerURL,
   getEmptyMediaStream,
   removeAllListeners,
-  getWatchers,
 } from "../lib/helpers";
-import { ViewFilled20 } from "@carbon/icons-react";
 import Peer from "peerjs";
 
 type PageProps = {
@@ -49,16 +43,9 @@ const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
 
     peer.on("call", (mediaConnection) => {
       mediaConnection.answer(stream);
-      setWatchers(getWatchers(peer));
 
-      mediaConnection.on("close", () => {
-        setWatchers(getWatchers(peer));
-      });
-      mediaConnection.on("error", () => {
-        setWatchers(getWatchers(peer));
-      });
-
-      console.log(peer);
+      mediaConnection.on("close", () => {});
+      mediaConnection.on("error", () => {});
     });
 
     return () => {
@@ -71,17 +58,13 @@ const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
 
     peer.on("open", () => {
       const mediaConnection = peer.call(streamerID, getEmptyMediaStream());
-      console.log(mediaConnection);
       mediaConnection.on("stream", (stream) => {
-        console.log(3);
         setStream(stream);
       });
       mediaConnection.on("close", () => {
         setStream(undefined);
       });
     });
-
-    console.log(peer);
   }, [peer, streamerID]);
 
   const startStream = async () => {
@@ -146,8 +129,7 @@ const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
               <HeaderNavigation aria-label="">
                 {streamerID === null && stream !== undefined ? (
                   <>
-                    <ViewFilled20 />
-                    <div>{watchers}</div>
+                    <Watchers peer={peer} />
                   </>
                 ) : (
                   <></>

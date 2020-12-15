@@ -59,21 +59,6 @@ const removeAllListeners = (peer: any) => {
   peer.removeAllListeners();
 };
 
-const getWatchers = (peer: Peer) => {
-  let r = 0;
-  for (let i in peer.connections) {
-    let connections = peer.connections[i];
-
-    for (let i = 0; i < connections.length; i++) {
-      if (connections[i].open) {
-        r++;
-        break;
-      }
-    }
-  }
-  return r;
-};
-
 // Empty track
 const getEmptyAudioTrack = () => {
   let ctx = new AudioContext();
@@ -112,7 +97,6 @@ export {
   setVh,
   copyToClipboard,
   getStreamerID,
-  getWatchers,
   getStreamerURL,
   getEmptyMediaStream,
   removeAllListeners,
