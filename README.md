@@ -1,4 +1,5 @@
 ## Screen Share
 
-- V2 is WIP here https://screensharedev.netlify.app/
-- V1 is functional here https://screenshare.netlify.app/
+- A peer to peer web application to stream video and audio
+- No installations or setup necessary, everthing is browser side JavaScript
+- https://screenshare.netlify.app/
