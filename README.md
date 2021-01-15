@@ -1,11 +1,6 @@
 ## Ice Cream
 
-- https://screenshare.netlify.app/
-- A peer to peer web application to stream video and audio
+A peer to peer web application to stream video and audio using Peer.JS, React and TypeScript
 
-### Technologies
+https://screenshare.netlify.app/
 
-- Peer.JS , a webRTC wrapper
-- TypeScript
-- React
-- Netlify
