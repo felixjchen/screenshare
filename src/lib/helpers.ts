@@ -41,7 +41,7 @@ const getStreamerURL = (id: string): string => {
   let url = "http://localhost:3000/";
 
   if (production) {
-    url = "https://screenshare.netlify.app/";
+    url = window.location.href;
   }
 
   return `${url}?watch=${id}`;
