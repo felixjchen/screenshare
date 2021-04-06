@@ -1,5 +1,3 @@
-import Peer from "peerjs";
-
 const setVh = () => {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -23,14 +21,7 @@ const copyToClipboard = (str: string) => {
   textArea.focus();
   textArea.select();
 
-  try {
-    const successful = document.execCommand("copy");
-    // const msg = successful ? "successful" : "unsuccessful";
-    // console.log("Copying text command was " + msg);
-  } catch (err) {
-    // console.error("Oops, unable to copy", err);
-  }
-
+  document.execCommand("copy");
   document.body.removeChild(textArea);
 };
 
