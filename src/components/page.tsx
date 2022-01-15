@@ -29,12 +29,7 @@ const Page: FunctionComponent<PageProps> = ({ id, streamerID }) => {
   const [watchers, setWatchers] = useState<number>(0);
 
   useEffect(() => {
-    const peer = new Peer(id, {
-      host: "peer-server.azurewebsites.net",
-      port: 443,
-      path: "/myapp",
-      secure: true,
-    });
+    const peer = new Peer(id);
     setPeer(peer);
   }, [id]);
 
